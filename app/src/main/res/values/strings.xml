@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Confidante</string>
+    <string name="profile">Profile</string>
+    <string name="chat">Chat</string>
+    <string name="find">Find</string>
+    <string name="user_full_name">Your Name</string>
+    <string name="bio_header">Bio</string>
+    <string name="interest_header">Interests</string>
+    <string name="profile_bio_hint">Enter a Bio</string>
 </resources>
