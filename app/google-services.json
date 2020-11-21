@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "501004603153",
+    "firebase_url": "https://confidante-cfc88.firebaseio.com",
+    "project_id": "confidante-cfc88",
+    "storage_bucket": "confidante-cfc88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501004603153:android:bdafa0bf1d416f088386b0",
+        "android_client_info": {
+          "package_name": "com.bignerdranch.android.confidante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501004603153-45fki8pkqm7hrd64h1l0ejcv76jc1v0g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bignerdranch.android.confidante",
+            "certificate_hash": "1ce86b95495b9be2eefc36b380884ad6e103ff5c"
+          }
+        },
+        {
+          "client_id": "501004603153-hptn3vj659dets2ha50j935st034ob92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdoPl-eaUJ4tnE8SN5gbutjQx-yY5Z4RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501004603153-hptn3vj659dets2ha50j935st034ob92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
