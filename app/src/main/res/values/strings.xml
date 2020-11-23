@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Confidante</string>
+    <string name="app_name">confidante</string>
     <string name="profile">profile</string>
     <string name="chat">chat</string>
     <string name="match">match</string>
