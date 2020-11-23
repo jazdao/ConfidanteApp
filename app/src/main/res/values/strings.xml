@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Confidante</string>
-    <string name="profile">Profile</string>
-    <string name="chat">Chat</string>
-    <string name="find">Find</string>
+    <string name="profile">profile</string>
+    <string name="chat">chat</string>
+    <string name="match">match</string>
     <string name="user_full_name">Your Name</string>
     <string name="bio_header">Bio</string>
     <string name="interest_header">Interests</string>
     <string name="profile_bio_hint">Enter a Bio</string>
+    <string name="username">\@username</string>
+    <string name="bio_sample">Hi, my name is Blah! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="interests_sample">Reading, Video Games, Music, Piano, Call of Duty, Genshin Impact, Undertale, Blah</string>
 </resources>
