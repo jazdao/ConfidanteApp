@@ -26,8 +26,6 @@ class ProfileActivity : AppCompatActivity() {
         profileBioField = findViewById(R.id.profile_bio)
         profilePicture = findViewById(R.id.profile_picture)
 
-        profilePicture.setImageResource(R.drawable.person);
-
         //listener for a bio change
         val bioWatcher = object : TextWatcher {
 
