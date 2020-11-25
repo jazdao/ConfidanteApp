@@ -1,10 +1,8 @@
 package com.bignerdranch.android.confidante
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
 //used in logging messages
@@ -12,32 +10,27 @@ private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var profileButton: Button
-    private lateinit var findButton: Button
-    private lateinit var chatButton: Button
-    private lateinit var profilePicture: ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        profileButton = findViewById(R.id.profile_button)
-        findButton = findViewById(R.id.find_button)
-        chatButton = findViewById(R.id.chat_button)
-        profilePicture = findViewById(R.id.profile_picture)
+        val chatButton = findViewById<ImageButton>(R.id.chat_button)
+        val matchButton = findViewById<ImageButton>(R.id.match_button)
+        val profileButton = findViewById<ImageButton>(R.id.profile_button)
 
-        profilePicture.setImageResource(R.drawable.person);
-
-        profileButton.setOnClickListener {
-            val intent = ProfileActivity.newIntent(this@MainActivity)
-            Log.d(TAG, "Exited newIntent method in ProfileActivity")
+        chatButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-        findButton.setOnClickListener {
-            Toast.makeText(this, R.string.find, Toast.LENGTH_SHORT).show()
+
+        matchButton.setOnClickListener {
+            val intent = Intent(this, MatchActivity::class.java)
+            startActivity(intent)
         }
-        chatButton.setOnClickListener {
-            Toast.makeText(this, R.string.chat, Toast.LENGTH_SHORT).show()
+
+        profileButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 }
