@@ -11,4 +11,11 @@
     <string name="new_confidant">You have a new confidant!</string>
     <string name="bio_sample">Hi, my name is Blah! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="interests_sample">Reading, Video Games, Music, Piano, Call of Duty, Genshin Impact, Undertale, Blah</string>
+    <string name="username_field">Username</string>
+    <string name="email_field">Email</string>
+    <string name="password_field">Password</string>
+    <string name="existing_account_link">Already have an account?</string>
+    <string name="register_account_link">Back to Register</string>
+    <string name="registration_button">Registration</string>
+    <string name="login_button">Login</string>
 </resources>
