@@ -54,19 +54,19 @@ class ProfileActivity : AppCompatActivity() {
                 count: Int
             ) {
                 // Eventually, we edit the bio here
-                database = FirebaseDatabase.getInstance()
-                reference = database.reference.child("Users").child("lmdall")
-
-                //hardcoded vars temporarily
-                var name = "Lance Dall"
-                var bio = "This is a default bio"
-                var interestList = "This is a dummy placeholder sentence for what will end up being a list of interests"
-
-                var user = User(name, bio, interestList)
-
-                user.userBio = sequence.toString()
-
-                reference.setValue(user)
+//                database = FirebaseDatabase.getInstance()
+//                reference = database.reference.child("Users").child("lmdall")
+//
+//                //hardcoded vars temporarily
+//                var name = "Lance Dall"
+//                var bio = "This is a default bio"
+//                var interestList = "This is a dummy placeholder sentence for what will end up being a list of interests"
+//
+//                val user = User(name, bio, interestList)
+//
+//                user.userBio = sequence.toString()
+//
+//                reference.setValue(user)
             }
 
             override fun afterTextChanged(sequence: Editable?) {

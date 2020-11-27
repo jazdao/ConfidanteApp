@@ -6,6 +6,9 @@ import android.util.Log
 private const val TAG = "User"
 
 class User(
+    var username: String,
+    var email: String,
+    var password: String,
     var nameOfUser: String? = null,
     var userBio: String? = null,
     var userListOfInterests: String? = null /**For now, this is just a String.  Later, this will be something like List<Interest>*/

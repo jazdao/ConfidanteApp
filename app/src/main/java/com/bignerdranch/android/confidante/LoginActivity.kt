@@ -1,30 +1,119 @@
-package com.projectsandbox.confidentemessenger
+package com.bignerdranch.android.confidante
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var reference: DatabaseReference
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var loginUsernameField: EditText
+    private lateinit var loginPasswordField: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        login_button.setOnClickListener {
-            val email = registered_email_address.text.toString()
-            val password = registered_password.text.toString()
+        database = FirebaseDatabase.getInstance()
 
-            Log.d("MainActivity", "Email is: $email")
-            Log.d("MainActivity", "Password is: $password")
+        loginUsernameField = findViewById(R.id.registered_username)
+        loginPasswordField = findViewById(R.id.registered_password)
+
+        login_button.setOnClickListener {
+            loginUser()
         }
 
         register_account_text_view.setOnClickListener {
-            Log.d("MainActivity", "Show Login Activity")
 
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
+    }
+
+    private fun validateEmail(): Boolean {
+        email = loginUsernameField.text.toString()
+
+        return if(email.isEmpty()) {
+            loginUsernameField.error = "Field cannot be empty"
+            false
+        } else {
+            loginUsernameField.error = null
+            true
+        }
+    }
+
+    private fun validatePassword(): Boolean {
+        password = loginPasswordField.text.toString()
+
+        return if(password.isEmpty()) {
+            loginPasswordField.error = "Field cannot be empty"
+            false
+        } else {
+            loginPasswordField.error = null
+            true
+        }
+    }
+
+    /**method that checks if this user exists in our user database.
+     * This will see if what our user entered for the 'email' and 'password' fields
+     * exists and is valid within our database containing all users of our app.
+     */
+    private fun isUser() {
+
+        val usernameEntered = email.trim()
+        val passwordEntered = password.trim()
+
+        reference = database.getReference("Users")
+
+        val checkUser = reference.orderByChild("username").equalTo(usernameEntered)
+
+        checkUser.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(@NonNull dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {    //if username entered exists in the database
+
+                    loginUsernameField.error = null
+
+                    val passwordFromDB =
+                        dataSnapshot.child(usernameEntered).child("password").getValue(
+                            String::class.java
+                        )
+
+                    if (passwordFromDB.equals(passwordEntered)) {
+                        validUser()
+                    } else {    //password entered for the given username is incorrect
+                        loginPasswordField.error = "Incorrect Password"
+                    }
+                } else {    //username entered does not exist in the database
+                    loginUsernameField.error = "Username is not linked to an existing account"
+                }
+            }
+
+            override fun onCancelled(@NonNull databaseError: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun loginUser(){
+        if (validateEmail() && validatePassword()) {
+
+            isUser()
+        }
+    }
+
+    private fun validUser(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
