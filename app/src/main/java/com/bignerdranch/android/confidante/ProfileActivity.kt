@@ -10,6 +10,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 //used in logging messages
 private const val TAG = "ProfileActivity"
@@ -18,6 +20,8 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileBioField: EditText
     private lateinit var profilePicture: ImageView
+    private lateinit var database: FirebaseDatabase
+    private lateinit var reference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +54,19 @@ class ProfileActivity : AppCompatActivity() {
                 count: Int
             ) {
                 // Eventually, we edit the bio here
+                database = FirebaseDatabase.getInstance()
+                reference = database.reference.child("Users").child("lmdall")
+
+                //hardcoded vars temporarily
+                var name = "Lance Dall"
+                var bio = "This is a default bio"
+                var interestList = "This is a dummy placeholder sentence for what will end up being a list of interests"
+
+                var user = User(name, bio, interestList)
+
+                user.userBio = sequence.toString()
+
+                reference.setValue(user)
             }
 
             override fun afterTextChanged(sequence: Editable?) {
