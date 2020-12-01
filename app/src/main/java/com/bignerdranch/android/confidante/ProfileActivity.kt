@@ -13,6 +13,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -36,7 +37,8 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         profileBioField = findViewById(R.id.profile_bio)
-        profilePicture = findViewById(R.id.profile_picture)
+
+        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
 
         //listener for a bio change
         val bioWatcher = object : TextWatcher {
@@ -159,3 +161,4 @@ class ProfileActivity : AppCompatActivity() {
     }
     class User(val uid: String, val username: String, val profileImageUrl: String)
 }
+
