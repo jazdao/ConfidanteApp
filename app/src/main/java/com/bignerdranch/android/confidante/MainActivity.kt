@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         matchButton.setOnClickListener {
-            //val intent = Intent(this, MatchActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, MatchActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Match Button Pressed", Toast.LENGTH_SHORT).show()
 
         }
