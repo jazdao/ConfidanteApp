@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         profileButton.setOnClickListener {
-            //val intent = Intent(this, ProfileActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Profile Button Pressed", Toast.LENGTH_SHORT).show()
 
         }

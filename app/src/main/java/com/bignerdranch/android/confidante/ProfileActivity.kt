@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -77,6 +80,21 @@ class ProfileActivity : AppCompatActivity() {
         profileBioField.addTextChangedListener(bioWatcher)
 
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val id = item.itemId
+//        if (id == R.id.home) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            Toast.makeText(this, "Home Button Pressed", Toast.LENGTH_SHORT).show()
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun setAnswerShownResult() {
         setResult(Activity.RESULT_OK)
