@@ -3,15 +3,23 @@ package com.bignerdranch.android.confidante
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.net.UrlQuerySanitizer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_profile.*
+import java.util.*
 
 //used in logging messages
 private const val TAG = "ProfileActivity"
@@ -75,13 +83,63 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         profileBioField.addTextChangedListener(bioWatcher)
+        profilePicture.setOnClickListener {
+            Log.d("ProfileActivity", "Try to show login activity")
+        val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+
+            uploadImageToFirebaseStorage()
+        }
+
 
     }
+    private fun uploadImageToFirebaseStorage() {
+        if (selectedPhotoUri == null) return
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
-    private fun setAnswerShownResult() {
-        setResult(Activity.RESULT_OK)
+        ref.putFile(selectedPhotoUri!!)
+            .addOnSuccessListener {
+                Log.d("ProfileActivity", "Sucessfully upload image: ${it.metadata?.path}")
+            ref.downloadUrl.addOnSuccessListener {
+                Log.d("ProfileActivity", "File Location: $it")
+
+                saveUserToFirebaseDatabase(it.toString())
+            }
+            }
+            .addOnFailureListener{
+                // do some logging here
+            }
     }
+    private fun saveUserToFirebaseDatabase(profileImageUrl: String){
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
+        val user = User(uid, username.text.toString(), profileImageUrl)
+
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d("ProfileActivity", "Finally we saved the user to Firebase Database ")
+            }
+            .addOnFailureListener{
+                // do some logging here
+            }
+    }
+    var selectedPhotoUri: Uri? = null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            Log.d("ProfileActivity", "Photo was selected")
+            selectedPhotoUri = data.data
+
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+            profile_picture.setImageBitmap(bitmap)
+            profilePicture.alpha = 0f
+            //val bitmapDrawable = BitmapDrawable(bitmap)
+            //profile_picture.setBackgroundDrawable(bitmapDrawable)
+        }
+    }
     /**
      * A companion object allows you to access functions without having an instance of a class,
      * similar to static functions in Java.  Using a newIntent(...) function inside a companion
@@ -99,4 +157,5 @@ class ProfileActivity : AppCompatActivity() {
             return Intent(packageContext, ProfileActivity::class.java)
         }
     }
+    class User(val uid: String, val username: String, val profileImageUrl: String)
 }
