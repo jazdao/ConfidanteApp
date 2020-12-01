@@ -30,11 +30,59 @@ class EditBio : AppCompatActivity() {
     private lateinit var profileBioField: EditText
     private lateinit var database: FirebaseDatabase
     private lateinit var reference: DatabaseReference
+    private lateinit var editBioField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_bio)
 
+        editBioField = findViewById(R.id.edit_bio)
+
+        //listener for a bio change
+        val bioWatcher = object : TextWatcher {
+
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            /**
+             * In onTextChanged(...), you call toString() on the CharSequence that is
+             * the user's input.  This function returns a string, which you then use
+             * to set the bio.
+             */
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                // Eventually, we edit the bio here
+//                database = FirebaseDatabase.getInstance()
+//                reference = database.reference.child("Users").child("lmdall")
+//
+//                //hardcoded vars temporarily
+//                var name = "Lance Dall"
+//                var bio = "This is a default bio"
+//                var interestList = "This is a dummy placeholder sentence for what will end up being a list of interests"
+//
+//                val user = User(name, bio, interestList)
+//
+//                user.userBio = sequence.toString()
+//
+//                reference.setValue(user)
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+
+        editBioField.addTextChangedListener(bioWatcher)
     }
 }
 

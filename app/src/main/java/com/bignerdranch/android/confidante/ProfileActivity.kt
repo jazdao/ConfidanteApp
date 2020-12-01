@@ -15,6 +15,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -36,55 +37,15 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-//        profileBioField = findViewById(R.id.profile_bio)
+        val editBio = findViewById<ImageButton>(R.id.edit_bio)
 
-//        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
-
-        //listener for a bio change
-        val bioWatcher = object : TextWatcher {
-
-            override fun beforeTextChanged(
-                sequence: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-                // This space intentionally left blank
-            }
-
-            /**
-             * In onTextChanged(...), you call toString() on the CharSequence that is
-             * the user's input.  This function returns a string, which you then use
-             * to set the bio.
-             */
-            override fun onTextChanged(
-                sequence: CharSequence?,
-                start: Int,
-                before: Int,
-                count: Int
-            ) {
-                // Eventually, we edit the bio here
-//                database = FirebaseDatabase.getInstance()
-//                reference = database.reference.child("Users").child("lmdall")
-//
-//                //hardcoded vars temporarily
-//                var name = "Lance Dall"
-//                var bio = "This is a default bio"
-//                var interestList = "This is a dummy placeholder sentence for what will end up being a list of interests"
-//
-//                val user = User(name, bio, interestList)
-//
-//                user.userBio = sequence.toString()
-//
-//                reference.setValue(user)
-            }
-
-            override fun afterTextChanged(sequence: Editable?) {
-                // This one too
-            }
+        editBio.setOnClickListener {
+            val intent = Intent(this, EditBio::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
 
-//        profileBioField.addTextChangedListener(bioWatcher)
+//        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
 //        profilePicture.setOnClickListener {
 //            Log.d("ProfileActivity", "Try to show login activity")
 //        val intent = Intent(Intent.ACTION_PICK)
