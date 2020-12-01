@@ -27,7 +27,7 @@ private const val TAG = "ProfileActivity"
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var profileBioField: EditText
+//    private lateinit var profileBioField: EditText
     private lateinit var profilePicture: ImageView
     private lateinit var database: FirebaseDatabase
     private lateinit var reference: DatabaseReference
@@ -36,9 +36,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        profileBioField = findViewById(R.id.profile_bio)
+//        profileBioField = findViewById(R.id.profile_bio)
 
-        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
+//        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
 
         //listener for a bio change
         val bioWatcher = object : TextWatcher {
@@ -84,15 +84,15 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        profileBioField.addTextChangedListener(bioWatcher)
-        profilePicture.setOnClickListener {
-            Log.d("ProfileActivity", "Try to show login activity")
-        val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
-
-            uploadImageToFirebaseStorage()
-        }
+//        profileBioField.addTextChangedListener(bioWatcher)
+//        profilePicture.setOnClickListener {
+//            Log.d("ProfileActivity", "Try to show login activity")
+//        val intent = Intent(Intent.ACTION_PICK)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, 0)
+//
+//            uploadImageToFirebaseStorage()
+//        }
 
 
     }
