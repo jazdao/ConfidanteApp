@@ -17,6 +17,7 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name = ".MainActivity"></activity>
+        <activity android:name=".EditBio"></activity>
         <activity android:name = ".RegisterActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
