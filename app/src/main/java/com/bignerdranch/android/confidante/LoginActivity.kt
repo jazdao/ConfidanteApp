@@ -4,10 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+
+private const val TAG = "LoginActivity"
 
 class LoginActivity : AppCompatActivity() {
 
@@ -67,7 +71,9 @@ class LoginActivity : AppCompatActivity() {
      * This will see if what our user entered for the 'email' and 'password' fields
      * exists and is valid within our database containing all users of our app.
      */
-    private fun isUser() {
+    private fun isUser(): Boolean {
+
+        var flag: Boolean = false
 
         val usernameEntered = email.trim()
         val passwordEntered = password.trim()
@@ -90,7 +96,8 @@ class LoginActivity : AppCompatActivity() {
                         )
 
                     if (passwordFromDB.equals(passwordEntered)) {
-                        validUser()
+                        //validUser()
+                        flag = true
                     } else {    //password entered for the given username is incorrect
                         loginPasswordField.error = "Incorrect Password"
                     }
@@ -103,12 +110,33 @@ class LoginActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+        return flag
     }
 
     private fun loginUser(){
         if (validateEmail() && validatePassword()) {
 
-            isUser()
+            //if (isUser()) {
+
+            val auth = FirebaseAuth.getInstance()
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        val user = auth.currentUser
+                        validUser()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                        // ...
+                    }
+
+                    // ...
+                }
+            //isUser()
         }
     }
 
