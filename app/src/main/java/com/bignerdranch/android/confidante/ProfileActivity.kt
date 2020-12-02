@@ -3,39 +3,38 @@ package com.bignerdranch.android.confidante
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.net.UrlQuerySanitizer
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
-
 
 //used in logging messages
 private const val TAG = "ProfileActivity"
 
 class ProfileActivity : AppCompatActivity() {
 
+//    private lateinit var profileBioField: EditText
     private lateinit var profilePicture: ImageView
-    private val mDatabase = FirebaseDatabase.getInstance()
-    private val mGetReference = mDatabase.reference
+    private lateinit var database: FirebaseDatabase
+    private lateinit var reference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         val editBio = findViewById<ImageButton>(R.id.edit_bio)
-        val userName = findViewById<TextView>(R.id.profile_user_full_name)
-
-//        userName.text = "";
 
         editBio.setOnClickListener {
             val intent = Intent(this, EditBio::class.java)
@@ -43,17 +42,17 @@ class ProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
 
-//        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
-//        profilePicture.setOnClickListener {
-//            Log.d("ProfileActivity", "Try to show login activity")
-//        val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, 0)
-//
-//            uploadImageToFirebaseStorage()
-//        }
-    }
+       profilePicture.setOnClickListener {
+            Log.d("ProfileActivity", "Try to show login activity")
+        val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
 
+           uploadImageToFirebaseStorage()
+        }
+
+
+    }
     private fun uploadImageToFirebaseStorage() {
         if (selectedPhotoUri == null) return
         val filename = UUID.randomUUID().toString()
