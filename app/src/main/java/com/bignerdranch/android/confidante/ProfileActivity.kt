@@ -42,15 +42,14 @@ class ProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
 
-//        val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
-//        profilePicture.setOnClickListener {
-//            Log.d("ProfileActivity", "Try to show login activity")
-//        val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, 0)
-//
-//            uploadImageToFirebaseStorage()
-//        }
+       profilePicture.setOnClickListener {
+            Log.d("ProfileActivity", "Try to show login activity")
+        val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+
+           uploadImageToFirebaseStorage()
+        }
 
 
     }
