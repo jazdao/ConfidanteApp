@@ -14,6 +14,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ChatActivity"/>
         </activity>
+        <activity android:name=".MatchActivity"/>
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name = ".MainActivity"></activity>
