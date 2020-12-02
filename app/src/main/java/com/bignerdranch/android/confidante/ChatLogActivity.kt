@@ -1,5 +1,4 @@
 package com.bignerdranch.android.confidante
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +22,6 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     val adapter = GroupAdapter<ViewHolder>()
-
     var toUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +30,7 @@ class ChatLogActivity : AppCompatActivity() {
         chat_log_recyclerview.adapter = adapter
         toUser = intent.getParcelableExtra<User>(ChatActivity.USER_KEY)
         supportActionBar?.title = toUser?.username
-
-        adapter.add(ChatFromItem("This is a message from your confidante."))
-        adapter.add(ChatToItem("This is my message."))
-
-        //listenForMessages()
+        listenForMessages()
 
         chat_log_send_button.setOnClickListener {
             performSendMessage()
@@ -45,10 +39,9 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun listenForMessages(){
-        //WE need FirebaseAuthentication
-        //val fromId = FirebaseAuth.getInstance().uid
-        //val toId = toUser?.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/Users-Messages")
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users-Messages/$fromId/$toId")
 
         ref.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -57,9 +50,9 @@ class ChatLogActivity : AppCompatActivity() {
                     Log.d(TAG, chatMessage.text)
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid){
                         val currentUser = MainActivity.currentUser?: return
-                        //adapter.add(ChatFromItem(chatMessage.text, currentUser))
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser))
                     } else {
-                        //adapter.add(ChatToItem(chatMessage.text, toUser!!))
+                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
 
                 }
@@ -86,20 +79,31 @@ class ChatLogActivity : AppCompatActivity() {
     private fun performSendMessage(){
         val text = chat_log_edittext.text.toString()
 
-        //We need Firebase Authetntication
-        //val fromId = FirebaseAuth.getInstance().uid
+        val fromId = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(ChatActivity.USER_KEY)
         val toId = user.uid
 
-        val reference = FirebaseDatabase.getInstance().getReference("Users-Messages").push()
-        val chatMessage = ChatMessage(reference.key!!, text, "", toId, System.currentTimeMillis()/1000)
-        reference.setValue(chatMessage)
+        if (fromId == null) return
+
+        val reference = FirebaseDatabase.getInstance().getReference("/Users-Messages/$fromId/$toId").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/Users-Messages/$toId/$fromId").push()
+        val chatMessage = ChatMessage(reference.key!!, text, fromId, toId, System.currentTimeMillis()/1000)
+        reference.setValue(chatMessage).addOnSuccessListener {
+            chat_log_edittext.text.clear()
+            chat_log_recyclerview.scrollToPosition(adapter.itemCount - 1)
+        }
+        toReference.setValue(chatMessage)
+
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/Latest-Messages/$fromId/$toId")
+        latestMessageRef.setValue(chatMessage)
+
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/Latest-Messages/$toId/$fromId")
+        latestMessageToRef.setValue(chatMessage)
     }
 
 }
 
-class ChatFromItem(val text: String): Item<ViewHolder>(){
-//class ChatFromItem(val text: String, val user: User): Item<ViewHolder>(){
+class ChatFromItem(val text: String, val user: User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_from_row.text = text
         //val uri = user.profileImageUrl
@@ -112,8 +116,7 @@ class ChatFromItem(val text: String): Item<ViewHolder>(){
     }
 }
 
-class ChatToItem(val text: String): Item<ViewHolder>(){
-//class ChatToItem(val text: String, val user: User): Item<ViewHolder>(){
+class ChatToItem(val text: String, val user: User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_to_row.text = text
         //val uri = user.profileImageUrl
