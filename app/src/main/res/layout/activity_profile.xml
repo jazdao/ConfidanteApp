@@ -13,15 +13,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingTop="150dp"
+            android:paddingTop="75dp"
             android:paddingBottom="75dp"
             android:orientation="vertical"
             android:background="@drawable/gradient">
 
            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_picture"
-                android:layout_width="275dp"
-                android:layout_height="275dp"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
                 android:src="@drawable/give_up"
                 android:layout_gravity="center_horizontal"
                 />
@@ -38,15 +38,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/user_full_name"
                     android:textColor="#fff"
-                    android:textSize="48sp"
+                    android:textSize="34sp"
                     android:textAlignment="center"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"/>
 
                 <ImageView
                     android:id="@+id/edit_name"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/edit_white"
                     android:layout_marginLeft="15dp"
                     android:layout_toEndOf="@id/profile_user_full_name"
@@ -62,7 +62,7 @@
                 android:text="@string/username"
                 android:textColor="#fff"
                 android:textAlignment="center"
-                android:textSize="32sp"/>
+                android:textSize="24sp"/>
 
         </LinearLayout>
 
@@ -87,8 +87,8 @@
                 android:layout_centerVertical="true"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="25dp"
                 android:layout_gravity="center"
                 android:src="@drawable/baseline_person_white_48"
@@ -101,14 +101,14 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:text="@string/bio_sample"
-                android:textSize="28sp"
-                android:lineHeight="45dp"/>
+                android:textSize="24sp"
+                android:lineHeight="40dp"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/heart_filled"/>
@@ -120,10 +120,10 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:text="@string/interests_sample"
-                android:textSize="28sp"
-                android:lineHeight="45dp"/>
+                android:textSize="24sp"
+                android:lineHeight="40dp"/>
 
         </LinearLayout>
 
