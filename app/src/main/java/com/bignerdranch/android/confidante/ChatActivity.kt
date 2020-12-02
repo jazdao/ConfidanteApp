@@ -1,3 +1,5 @@
+package com.bignerdranch.android.confidante
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
