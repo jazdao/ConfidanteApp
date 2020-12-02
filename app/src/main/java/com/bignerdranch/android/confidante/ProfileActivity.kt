@@ -26,7 +26,7 @@ private const val TAG = "ProfileActivity"
 class ProfileActivity : AppCompatActivity() {
 
 //    private lateinit var profileBioField: EditText
-    private lateinit var profilePicture: ImageView
+    //private lateinit var profilePicture: ImageView
     private lateinit var database: FirebaseDatabase
     private lateinit var reference: DatabaseReference
 
@@ -42,8 +42,7 @@ class ProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
 
-        //val profilePicture = findViewById<ImageButton>(R.id.profile_picture)
-        profile_picture.setOnClickListener {
+       profile_picture.setOnClickListener {
             Log.d("ProfileActivity", "Try to show login activity")
         val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -53,20 +52,6 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-    }
-    var selectedPhotoUri: Uri? = null
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-            Log.d("ProfileActivity", "Photo was selected")
-            selectedPhotoUri = data.data
-
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            profile_picture.setImageBitmap(bitmap)
-            //profile_picture.alpha = 0f
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            profile_picture.setBackgroundDrawable(bitmapDrawable)
-        }
     }
     private fun uploadImageToFirebaseStorage() {
         if (selectedPhotoUri == null) return
@@ -99,6 +84,20 @@ class ProfileActivity : AppCompatActivity() {
             .addOnFailureListener{
                 // do some logging here
             }
+    }
+    var selectedPhotoUri: Uri? = null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            Log.d("ProfileActivity", "Photo was selected")
+            selectedPhotoUri = data.data
+
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+            profile_picture.setImageBitmap(bitmap)
+            profile_picture.alpha = 0f
+            //val bitmapDrawable = BitmapDrawable(bitmap)
+            //profile_picture.setBackgroundDrawable(bitmapDrawable)
+        }
     }
     /**
      * A companion object allows you to access functions without having an instance of a class,
