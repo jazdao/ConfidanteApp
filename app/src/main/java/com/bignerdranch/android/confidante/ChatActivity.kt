@@ -3,6 +3,9 @@ package com.bignerdranch.android.confidante
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,6 +25,13 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         supportActionBar?.hide()
         fetchUsers()
+
+        val backButton = findViewById<Button>(R.id.back_button)
+
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {
