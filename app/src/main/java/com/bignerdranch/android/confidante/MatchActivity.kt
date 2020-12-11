@@ -47,6 +47,6 @@ class InterestItem: Item<ViewHolder>() {
     }
 
     override fun getLayout(): Int {
-        return R.layout.interest_row
+        return R.layout.my_interest_row
     }
 }
