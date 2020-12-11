@@ -3,19 +3,14 @@ package com.bignerdranch.android.confidante
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.net.UrlQuerySanitizer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
@@ -25,19 +20,19 @@ private const val TAG = "ProfileActivity"
 
 class ProfileActivity : AppCompatActivity() {
 
-//    private lateinit var profileBioField: EditText
+    private lateinit var profileBioField: TextView
+    private lateinit var profileInterestField: TextView
     //private lateinit var profilePicture: ImageView
     private lateinit var database: FirebaseDatabase
     private lateinit var reference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_profile)
 
-        val editBio = findViewById<ImageButton>(R.id.edit_bio)
-        
-        val editInterestItem: ImageButton?
-        editInterestItem = findViewById<ImageButton>(R.id.edit_interests)
+        var editBio = findViewById<ImageButton>(R.id.edit_bio)
+        var editInterestItem = findViewById<ImageButton>(R.id.edit_interests)
 
         editInterestItem.setOnClickListener {
             val intent = Intent(this, EditInterest::class.java)
@@ -49,17 +44,47 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
-       profile_picture.setOnClickListener {
+        profile_picture.setOnClickListener {
             Log.d("ProfileActivity", "Try to show login activity")
-        val intent = Intent(Intent.ACTION_PICK)
+            val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
 
-           uploadImageToFirebaseStorage()
+            uploadImageToFirebaseStorage()
         }
 
+        val uid = FirebaseAuth.getInstance().uid
+
+        profileBioField = findViewById(R.id.bio_textview)
+        profileInterestField = findViewById(R.id.interest_textview)
+
+        val profileBioFieldRef = FirebaseDatabase.getInstance().getReference("/Users/$uid/UserBio")
+        val profileInterestFieldRef = FirebaseDatabase.getInstance().getReference("/Users/$uid/UserInterests")
+
+        profileBioFieldRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                profileBioField.text = "This is my bio"
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        profileInterestFieldRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                profileInterestField.text = "These are my interests"
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
     }
+
     private fun uploadImageToFirebaseStorage() {
         if (selectedPhotoUri == null) return
         val filename = UUID.randomUUID().toString()
@@ -68,11 +93,11 @@ class ProfileActivity : AppCompatActivity() {
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 Log.d("ProfileActivity", "Sucessfully upload image: ${it.metadata?.path}")
-            ref.downloadUrl.addOnSuccessListener {
-                Log.d("ProfileActivity", "File Location: $it")
+                ref.downloadUrl.addOnSuccessListener {
+                    Log.d("ProfileActivity", "File Location: $it")
 
-                saveUserToFirebaseDatabase(it.toString())
-            }
+                    saveUserToFirebaseDatabase(it.toString())
+                }
             }
             .addOnFailureListener{
                 // do some logging here
@@ -125,4 +150,3 @@ class ProfileActivity : AppCompatActivity() {
     }
     class User(val uid: String, val username: String, val profileImageUrl: String)
 }
-
