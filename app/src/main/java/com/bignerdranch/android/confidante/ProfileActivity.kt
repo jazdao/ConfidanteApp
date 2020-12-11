@@ -35,12 +35,20 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val editBio = findViewById<ImageButton>(R.id.edit_bio)
+        
+        val editInterestItem: ImageButton?
+        editInterestItem = findViewById<ImageButton>(R.id.interest_row)
 
         editBio.setOnClickListener {
             val intent = Intent(this, EditBio::class.java)
             startActivity(intent)
             Toast.makeText(this, "Edit Bio Button Pressed", Toast.LENGTH_SHORT).show()
         }
+         editInterestItem.setOnClickListener(
+            val intent = Intent ( this, EditInterest::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Edit Interests Button", Toast.LENGTH_SHORT).show()
+        )
 
        profile_picture.setOnClickListener {
             Log.d("ProfileActivity", "Try to show login activity")
