@@ -29,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        supportActionBar?.hide()
 
         registerUsernameField = findViewById(R.id.username_registration)
         registerEmailField = findViewById(R.id.email_registration)
