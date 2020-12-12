@@ -28,7 +28,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        supportActionBar?.title = "My Profile Page"
         setContentView(R.layout.activity_profile)
 
         var editBio = findViewById<ImageButton>(R.id.edit_bio)
