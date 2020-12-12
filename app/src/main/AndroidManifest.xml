@@ -16,11 +16,11 @@
         </activity>
         <activity android:name=".MatchActivity"/>
         <activity android:name=".ChatActivity" />
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name = ".MainActivity"></activity>
-        <activity android:name=".EditBio"></activity>
-        <activity android:name=".EditInterest"/></activity>
-        <activity android:name = ".RegisterActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name = ".MainActivity"/>
+        <activity android:name=".EditBio"/>
+        <activity android:name=".EditInterest"/>
+        <activity android:name = ".RegisterActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,3 +31,4 @@
     </application>
 
 </manifest>
+
